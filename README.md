@@ -5,7 +5,9 @@ This project was bootstrapped with [Create React Native App](https://github.com/
 to install the application
 ### `npm install`
 
-## Starting In Application
+## Start the Application
 ### `npm start`
+*Do not forget to turn on the Emulator
 
-This apps is tested only in Android.
+### Emulator using genymotion
+This apps has been tested only in Android.
