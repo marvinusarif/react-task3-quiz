@@ -1,7 +1,8 @@
+import _ from 'lodash'
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
-import { lightPurp, blue, purple, red } from '../styles/colors'
+import { lightPurp, blue, purple, red, white } from '../styles/colors'
 
 class Deck extends Component {
   static navigationOptions = ({navigation}) => {
@@ -12,11 +13,14 @@ class Deck extends Component {
 
   render () {
     const { navigation } = this.props
+    if(!this.props.deck) {
+      return <ActivityIndicator style={{marginTop: 30}}/>
+    }
     const { deckId, title, questions, lastScore, lastTaken, createdAt } = this.props.deck
     return (
       <View style={styles.container}>
         <Text style={{fontSize : 40}}>{title}</Text>
-        <Text style={{fontSize : 30}}>{questions.length} Cards</Text>
+        <Text style={{fontSize : 30}}>{questions && (questions.length)} Cards</Text>
         <Text style={{fontSize : 20, color : purple}}>Last Score : {lastScore}</Text>
         <Text style={{fontSize : 15, color : red}}>Completed At : { lastTaken ? `(${lastTaken})` : 'none'}</Text>
         <Text style={{fontSize : 15}}>Created At : {createdAt}</Text>
@@ -24,13 +28,13 @@ class Deck extends Component {
           deckId,
           title
         })}>
-          <Text>Add Card</Text>
+          <Text style={{color : white}}>Add Card</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.startQuizBtn} onPress={() => navigation.navigate('Quiz',{
           deckId,
           title
         })}>
-          <Text>Start Quiz</Text>
+          <Text style={{color : white}}>Start Quiz</Text>
         </TouchableOpacity>
       </View>
     )
@@ -40,7 +44,7 @@ class Deck extends Component {
 function mapStateToProps ({decks}, {navigation}) {
   const deckId = navigation.state.params.deckId
   return {
-    deck : decks.items[deckId]
+    deck : _.filter(decks.items, (deck) => {return deckId === deck.deckId}).pop()
   }
 }
 

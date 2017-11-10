@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 import { View, TextInput, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { reduxForm, Field} from 'redux-form'
 import { connect } from 'react-redux'
-import { blue, white } from '../styles/colors'
+import { blue, white, red } from '../styles/colors'
 import { storeCard } from '../actions/decks'
 
-const renderInput = ({ input : {onChange, ...inputs}, meta : { touched, error } }) => {
+const renderInput = ({header, input : {onChange, ...inputs}, meta : { touched, error } }) => {
   return (
     <View>
-      <TextInput onChangeText={onChange} {...inputs}/>
+      <Text style={{fontSize : 30, textAlign : 'center', marginTop : 20}}>{header}</Text>
+      <TextInput style={{marginTop : 10}} onChangeText={onChange} {...inputs}/>
       { touched && error && (
         <Text style={{color : red}}>{error}</Text>
       )}
@@ -35,10 +36,12 @@ class AddCard extends Component {
     const { handleSubmit } = this.props
     return (
       <View style={styles.container}>
-        <Text style={{fontSize : 20, textAlign : 'center'}}>What is the Question ?</Text>
-        <Field name='question' component={renderInput} />
-        <Text style={{fontSize : 20, textAlign : 'center'}}>What is the answer ?</Text>
-        <Field name='answer' component={renderInput} />
+        <Field name='question'
+          component={renderInput}
+          header={`What is Your Question ?`}/>
+        <Field name='answer'
+          component={renderInput}
+          header={`What is Your Answer ?`}/>
         <TouchableOpacity style={styles.submitBtn} onPress={handleSubmit(this.submit)}>
           <Text style={{color : white}}>Submit</Text>
         </TouchableOpacity>

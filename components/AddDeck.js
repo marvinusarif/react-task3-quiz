@@ -4,6 +4,7 @@ import { reduxForm, Field} from 'redux-form'
 import { connect } from 'react-redux'
 import { postDeck } from '../actions/decks'
 import { red, blue, white } from '../styles/colors'
+import uuid from 'uuid/v4'
 
 const renderInput = ({ input : {onChange, ...inputs}, meta : { touched, error } }) => {
   return (
@@ -20,10 +21,14 @@ class AddDeck extends Component {
     super(props)
     this.submit = this.submit.bind(this)
   }
-  submit(form){
+  submit({title}){
     const { postDeck, navigation, reset } = this.props
-    postDeck(form)
-    navigation.goBack()
+    const submittedValue = {
+      deckId : uuid(),
+      title
+    }
+    postDeck(submittedValue)
+    navigation.navigate('Deck',submittedValue)
     reset()
   }
   render(){

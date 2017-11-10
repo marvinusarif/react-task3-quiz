@@ -4,7 +4,6 @@ import { fetchDecksFromStorage,
   storeDeckToStorage,
   storeCardtoDeckStorage,
   updateDeckStorage } from '../utils/api'
-import uuid from 'uuid/v4'
 
 export const fetchDecks = () => dispatch => {
   fetchDecksFromStorage()
@@ -19,9 +18,9 @@ export const receiveDecks = (decks) => {
     }
   }
 }
-export const postDeck = ({title}) => dispatch => {
+export const postDeck = ({deckId, title}) => dispatch => {
   const entry = {
-    deckId : uuid(),
+    deckId,
     title,
     questions : [],
     lastTaken : null,

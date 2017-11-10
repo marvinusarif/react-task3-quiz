@@ -46,7 +46,7 @@ class Quiz extends Component {
     this.restartQuiz = this.restartQuiz.bind(this)
   }
 
-  componentDidMount(){
+  componentWillMount(){
     this.setState({
       questionsLength : this.props.questions.length
     })
@@ -91,10 +91,10 @@ class Quiz extends Component {
           <Text style={{fontSize : 50}}> { Math.ceil(corrects/questionsLength * 100) } </Text>
           <Text style={{fontSize : 20}}> {corrects} correct answers of {questionsLength} questions </Text>
           <TouchableOpacity style={{ padding : 20, marginTop : 20, backgroundColor : blue}} onPress={this.restartQuiz}>
-            <Text> Restart Quiz </Text>
+            <Text style={{color : white}}> Restart Quiz </Text>
           </TouchableOpacity>
           <TouchableOpacity style={{ padding : 20, marginTop : 20, backgroundColor : blue}} onPress={() => navigation.goBack()}>
-            <Text> Back to Deck </Text>
+            <Text style={{color : white}}> Back to Deck </Text>
           </TouchableOpacity>
         </View>
       )
