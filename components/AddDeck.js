@@ -5,17 +5,9 @@ import { connect } from 'react-redux'
 import { postDeck } from '../actions/decks'
 import { red, blue, white } from '../styles/colors'
 import uuid from 'uuid/v4'
+import TextBox from './TextBox'
+import Button from './Button'
 
-const renderInput = ({ input : {onChange, ...inputs}, meta : { touched, error } }) => {
-  return (
-    <View>
-      <TextInput onChangeText={onChange} {...inputs}/>
-      { touched && error && (
-        <Text style={{color : red}}>{error}</Text>
-      )}
-    </View>
-  )
-}
 class AddDeck extends Component {
   constructor(props){
     super(props)
@@ -35,11 +27,12 @@ class AddDeck extends Component {
     const { handleSubmit } = this.props
     return (
       <View style={styles.container}>
-        <Text style={{fontSize : 30, textAlign : 'center'}}>What is your deck title?</Text>
-        <Field name='title' component={renderInput} />
-        <TouchableOpacity style={styles.submitBtn} onPress={handleSubmit(this.submit)}>
-          <Text style={{color : white}}>Create New Deck</Text>
-        </TouchableOpacity>
+        <Field name='title' component={TextBox} header="What is your deck title ?"/>
+        <Button
+          onPress={handleSubmit(this.submit)}
+          style={styles.submitBtn}
+          textColor={white}
+          text="Create New Deck" />
       </View>
     )
   }

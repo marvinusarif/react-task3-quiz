@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { lightPurp, blue, purple, red, white } from '../styles/colors'
+import Button from './Button'
 
 class Deck extends Component {
   static navigationOptions = ({navigation}) => {
@@ -19,23 +20,29 @@ class Deck extends Component {
     const { deckId, title, questions, lastScore, lastTaken, createdAt } = this.props.deck
     return (
       <View style={styles.container}>
-        <Text style={{fontSize : 40}}>{title}</Text>
-        <Text style={{fontSize : 30}}>{questions && (questions.length)} Cards</Text>
-        <Text style={{fontSize : 20, color : purple}}>Last Score : {lastScore}</Text>
-        <Text style={{fontSize : 15, color : red}}>Completed At : { lastTaken ? `(${lastTaken})` : 'none'}</Text>
-        <Text style={{fontSize : 15}}>Created At : {createdAt}</Text>
-        <TouchableOpacity style={styles.addCardBtn} onPress={() => navigation.navigate('AddCard',{
+        <View style={{alignItems : 'center'}}>
+          <Text style={{fontSize : 40}}>{title}</Text>
+          <Text style={{fontSize : 30}}>{questions.length} Cards</Text>
+          <Text style={{fontSize : 20, color : purple}}>Last Score : {lastScore}</Text>
+          <Text style={{fontSize : 15, color : red}}>Completed At : { lastTaken ? `(${lastTaken})` : 'none'}</Text>
+          <Text style={{fontSize : 15}}>Created At : {createdAt}</Text>
+        </View>
+        <Button
+          onPress={() => navigation.navigate('AddCard',{
           deckId,
           title
-        })}>
-          <Text style={{color : white}}>Add Card</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.startQuizBtn} onPress={() => navigation.navigate('Quiz',{
+        })}
+          style={styles.addCardBtn}
+          textColor={white}
+          text="Add Card" />
+        <Button
+          onPress={() => navigation.navigate('Quiz',{
           deckId,
           title
-        })}>
-          <Text style={{color : white}}>Start Quiz</Text>
-        </TouchableOpacity>
+        })}
+          style={styles.startQuizBtn}
+          textColor={white}
+          text="Start Quiz"/>
       </View>
     )
   }
@@ -58,12 +65,10 @@ const styles = StyleSheet.create({
     backgroundColor : blue,
     margin : 20,
     padding : 40,
-    alignItems : 'center',
   },
   startQuizBtn : {
     backgroundColor : lightPurp,
     padding : 40,
-    alignItems : 'center'
   }
 })
 export default connect(mapStateToProps)(Deck)

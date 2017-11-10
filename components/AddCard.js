@@ -4,18 +4,9 @@ import { reduxForm, Field} from 'redux-form'
 import { connect } from 'react-redux'
 import { blue, white, red } from '../styles/colors'
 import { storeCard } from '../actions/decks'
+import TextBox from './TextBox'
+import Button from './Button'
 
-const renderInput = ({header, input : {onChange, ...inputs}, meta : { touched, error } }) => {
-  return (
-    <View>
-      <Text style={{fontSize : 30, textAlign : 'center', marginTop : 20}}>{header}</Text>
-      <TextInput style={{marginTop : 10}} onChangeText={onChange} {...inputs}/>
-      { touched && error && (
-        <Text style={{color : red}}>{error}</Text>
-      )}
-    </View>
-  )
-}
 class AddCard extends Component {
   static navigationOptions = ({navigation}) => {
     return {
@@ -37,14 +28,16 @@ class AddCard extends Component {
     return (
       <View style={styles.container}>
         <Field name='question'
-          component={renderInput}
+          component={TextBox}
           header={`What is Your Question ?`}/>
         <Field name='answer'
-          component={renderInput}
+          component={TextBox}
           header={`What is Your Answer ?`}/>
-        <TouchableOpacity style={styles.submitBtn} onPress={handleSubmit(this.submit)}>
-          <Text style={{color : white}}>Submit</Text>
-        </TouchableOpacity>
+        <Button
+          onPress={handleSubmit(this.submit)}
+          style={styles.submitBtn}
+          textColor={white}
+          text="Submit" />
       </View>
     )
   }

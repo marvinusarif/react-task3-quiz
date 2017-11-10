@@ -8,7 +8,7 @@ import { blue, red, white } from '../styles/colors'
 import {
     clearLocalNotification,
     setLocalNotification } from '../utils/helpers'
-
+import Button from './Button'
 const QuestionAnswerHead = ({questionLastPos, questionsLength}) => {
   return (
     <View style={{ flex:1, padding: 10}}>
@@ -83,19 +83,36 @@ class Quiz extends Component {
   render () {
     const { navigation } = this.props;
     const {questionLastPos, showingQuestion, questionsLength, corrects} = this.state
-
+    if(questionsLength < 1){
+      return (
+        <View style={{flex : 1, alignItems : 'center'}}>
+          <Text style={{fontSize : 40}}>No Quiz</Text>
+          <Text style={{fontSize : 30}}>This Deck is empty</Text>
+          <Text style={{fontSize : 20}}>Please Add Some Cards</Text>
+          <Button
+            onPress={() => navigation.goBack()}
+            style={{ padding : 20, marginTop : 20, backgroundColor : blue}}
+            textColor={white}
+            text="Back to Deck" />
+        </View>
+      )
+    }
     if(questionLastPos + 1 > questionsLength) {
       return (
         <View style={styles.result}>
           <Text style={{fontSize : 30}}> Score </Text>
           <Text style={{fontSize : 50}}> { Math.ceil(corrects/questionsLength * 100) } </Text>
           <Text style={{fontSize : 20}}> {corrects} correct answers of {questionsLength} questions </Text>
-          <TouchableOpacity style={{ padding : 20, marginTop : 20, backgroundColor : blue}} onPress={this.restartQuiz}>
-            <Text style={{color : white}}> Restart Quiz </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{ padding : 20, marginTop : 20, backgroundColor : blue}} onPress={() => navigation.goBack()}>
-            <Text style={{color : white}}> Back to Deck </Text>
-          </TouchableOpacity>
+          <Button
+            onPress={this.restartQuiz}
+            style={{ padding : 20, marginTop : 20, backgroundColor : red}}
+            textColor={white}
+            text="Restart Quiz" />
+          <Button
+            onPress={() => navigation.goBack()}
+            style={{ padding : 20, marginTop : 20, backgroundColor : blue}}
+            textColor={white}
+            text="Back to Deck" />
         </View>
       )
     }
